@@ -1,0 +1,26 @@
+USE ev_data;
+SELECT postal_code 
+FROM electric_vehicle_population_data
+WHERE Postal_Code IS NOT NULL;
+
+
+SELECT*
+FROM electric_vehicle_population_data;
+
+
+-- GETTING THE CAR MAKE AND MODEL WITH THE HEIGHEST NUMBER OF OCCOURENCES 
+SELECT model,make, COUNT(*) AS OCCOURENCES
+FROM electric_vehicle_population_data
+GROUP BY model,make
+ORDER BY OCCOURENCES DESC
+LIMIT 1
+;
+
+SELECT state,make,Clean_Alternative_Fuel 
+FROM electric_vehicle_population_data;
+
+SET sql_mode = 'ANSI_QUOTES';
+
+ALTER TABLE EV_data
+RENAME COLUMN `Clean_Alternative_Fuel _Vehicle_Eligibility` TO CAFVA;
+
