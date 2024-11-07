@@ -183,4 +183,47 @@ INNER JOIN orders
 ON customers.customer_id = orders.customer_id
 ;
 
+DELIMITER $$
+	CREATE PROCEDURE best_customers2()
+BEGIN
+	SELECT*
+	FROM orders
+	WHERE total_price >= 500;
+	SELECT*
+	FROM orders 
+	WHERE order_status LIKE '$delivered$';
+    END$$
+DELIMITER ;
 
+DELIMITER $$
+BEGIN
+	CREATE PROCEDURE best_customers2()
+	SELECT*
+	FROM orders
+	WHERE total_price >= 500;
+	SELECT*
+	FROM orders 
+	WHERE order_status LIKE '$delivered$'
+    ORDER BY DESC
+    END
+DELIMITER ;
+
+
+USE inventory_and_sales_database;
+
+
+  CALL BEST_CUSTOMERS2;
+  
+CREATE TEMPORARY TABLE TOP_CUSTOMER AS
+	SELECT*
+	FROM orders
+	WHERE total_price >= 500;
+    ;
+    
+SELECT* 
+FROM TOP_CUSTOMER
+LEFT JOIN ORDERS
+ON top_customer.customer_id = orders.customer_id;
+    
+SELECT*
+FROM orders;
